@@ -1,12 +1,13 @@
 const router = require('express').Router(),
   faceScanController = require('../controllers/face_scanning.controller'),
   voiceVerificationController = require('../controllers/voice_verfication.controller'),
-  express_healthcheck = require('express-healthcheck');
+  express_healthcheck = require('express-healthcheck'),
+  multer = require('multer')({ dest: './photos' });
 
-router.use('/healthcheck', express_healthcheck());
+router.get('/healthcheck', express_healthcheck());
 
-router.use('/face-scanning', faceScanController);
+router.post('/face-scanning', multer.single('image'), faceScanController);
 
-router.use('/voice-verification', voiceVerificationController);
+router.post('/voice-verification', voiceVerificationController);
 
 module.exports = router;
