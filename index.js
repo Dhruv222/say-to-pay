@@ -18,10 +18,11 @@ app.use(
 app.use('/api', routes);
 
 app.use(function(err, req, res, next) {
-  logger.error(err);
+  logger.error(JSON.stringify(err));
   if (err instanceof apiError) {
     next(err);
   } else {
+    console.log(err);
     next(new apiError());
   }
 });

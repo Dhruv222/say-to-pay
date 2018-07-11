@@ -6,7 +6,14 @@ const router = require('express').Router(),
 
 router.get('/healthcheck', express_healthcheck());
 
-router.post('/face-scanning', multer.single('image'), faceScanController);
+router.post(
+  '/face-scanning',
+  multer.fields([
+    { name: 'image', maxCount: 1 },
+    { name: 'voice', maxCount: 1 },
+  ]),
+  faceScanController,
+);
 
 router.post('/voice-verification', voiceVerificationController);
 
